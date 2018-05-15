@@ -8,10 +8,10 @@ You need to have [Node.js](https://nodejs.org), [SQL Server Management Studio ](
 
 
 ### Installation
-npm install debug --save
+npm install 
 
 ### Run server
-nodemon server.js
+npm start
 
 ### Publishing a NodeJS app to Azure
 1.In Visual Studio, create a new project, and for the type, select 'From Existing Node.js code'.<br/>
