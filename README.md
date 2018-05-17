@@ -13,6 +13,12 @@ npm install
 ### Run server
 npm start
 
+### Testing the API
+Test REST API using [Postman](https://www.getpostman.com/apps)
+```sh
+http POST http://localhost:3302/
+```
+
 ### Publishing a NodeJS app to Azure
 1.In Visual Studio, create a new project, and for the type, select 'From Existing Node.js code'.<br/>
 2.Add project from your project home folder( ‘c:\users\..\projects’).<br/>

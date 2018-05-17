@@ -75,7 +75,7 @@ app.use('/docs', express.static(path.join(__dirname, 'apidoc')));
 
 // base interface
 app.get('/', function (req, res, next) {
-    res.end('welcome to Fleet Management...!');
+    res.end('Fleet service is now running.');
 });
 
 

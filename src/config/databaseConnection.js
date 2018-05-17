@@ -102,7 +102,7 @@ module.exports = {
                 'vehicles'
             ];
             models.forEach(function (model) {
-                console.log("Model :: ", model, module.exports[model]);
+                console.log("Model :: ", model);
                 module.exports[model] = sequelize.import('../models/' + model);
                 module.exports[model].sync().then(() => {
                     logger.info(model + ' table created successfully');

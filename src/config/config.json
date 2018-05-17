@@ -6,7 +6,6 @@
       "dbUserName": "Mobiliya",
       "dbUserPassword": "qwert_1234",
       "dbHost": "mobiliya.database.cloudapi.cn",
-      "dbPort": 80,
       "dbDialect": "mssql",
       "dbInstanceName": "SQLEXPRESS"
     },
@@ -21,7 +20,7 @@
       "JWT_ACCESS_TOKEN_STR": "accessToken"
     },
     "redis": {
-      "port": 6380,
+      "port": 6379,
       "host": "mobiliya.redis.cache.cloudapi.cn",
       "option": {
         "auth_pass": "Z6W2beVx0oxhLiESjIaKqbN7Rgp83GzNLT+GlGOz9WQ="
@@ -34,7 +33,6 @@
       "dbUserName": "Mobiliya",
       "dbUserPassword": "qwert_1234",
       "dbHost": "mobiliya.database.cloudapi.cn",
-      "dbPort": 80,
       "dbDialect": "mssql",
       "dbInstanceName": "SQLEXPRESS"
     },
@@ -49,7 +47,7 @@
       "JWT_ACCESS_TOKEN_STR": "accessToken"
     },
     "redis": {
-      "port": 6380,
+      "port": 6379,
       "host": "mobiliya.redis.cache.cloudapi.cn",
       "option": {
         "auth_pass": "V5s9qjyF3XHIquxvYVFLDiJHIvdDwYRs3/tzSE0ZQGw="
@@ -61,7 +59,6 @@
       "dbUserName": "sadmin",
       "dbUserPassword": "Welcome@1",
       "dbHost": "msfleetdb.database.windows.net",
-      "dbPort": 80,
       "dbDialect": "mssql",
       "dbInstanceName": "SQLEXPRESS"
     },
@@ -93,7 +90,6 @@
   },
   "local": {
     "databaseConnection": {
-    
       "dbUserName": "sa",
       "dbUserPassword": "root",
       "dbHost": "localhost",
