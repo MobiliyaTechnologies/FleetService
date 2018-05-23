@@ -8,6 +8,47 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var expressValidator = require('express-validator');
+
+var fs = require('fs');
+
+//Update config for production environment
+var fileName = './src/config/config.json';
+var file = require(fileName);
+
+
+if (file.activeEnv == "prod") {
+    if (process.env.CUSTOMCONNSTR_dbName != undefined) {
+        file.prod.databaseConnection.dbName = process.env.CUSTOMCONNSTR_dbName;
+    }
+    if (process.env.CUSTOMCONNSTR_dbUserName != undefined) {
+        file.prod.databaseConnection.dbUserName = process.env.CUSTOMCONNSTR_dbUserName;
+    }
+    if (process.env.CUSTOMCONNSTR_dbUserPassword != undefined) {
+        file.prod.databaseConnection.dbUserPassword = process.env.CUSTOMCONNSTR_dbUserPassword;
+    }
+    if (process.env.CUSTOMCONNSTR_dbHost != undefined) {
+        file.prod.databaseConnection.dbHost = process.env.CUSTOMCONNSTR_dbHost;
+    }
+    if (process.env.CUSTOMCONNSTR_identityURL != undefined) {
+        file.prod.hostname_identity = process.env.CUSTOMCONNSTR_identityURL;
+    }
+    if (process.env.CUSTOMCONNSTR_redisHost != undefined) {
+        file.prod.redis.host = process.env.CUSTOMCONNSTR_redisHost;
+    }
+    if (process.env.CUSTOMCONNSTR_redisAuthPass != undefined) {
+        file.prod.redis.option.auth_pass = process.env.CUSTOMCONNSTR_redisAuthPass;
+    }
+    if (process.env.CUSTOMCONNSTR_iothubConnectionString != undefined) {
+        file.prod.iothub.CONNECTION_STRING = process.env.CUSTOMCONNSTR_iothubConnectionString;
+    }
+
+    fs.writeFile(fileName, JSON.stringify(file), function (err) {
+        if (err) return console.log(err);
+        console.log(JSON.stringify(file));
+        console.log('writing to ' + fileName);
+    });
+}
+
 var fleet = require('./routes/fleet');
 var vehicle = require('./routes/vehicle');
 var device = require('./routes/device');
