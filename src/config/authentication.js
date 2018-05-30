@@ -58,7 +58,7 @@ module.exports = {
             try {
                 var decoded = JWT.verify(req.headers.authorization, config.JWT_SECRET_FOR_ACCESS_TOKEN);
 
-                if (decoded.user.email === "superadmin@mobiliya.com") {//check whether tenantId is valid or not
+                if (decoded.user.roleName === 'super admin') {//check whether tenantId is valid or not
                     var dbName = tenantId;
                     dbName = dbName.replace(/-/g, '');
                     dbName = "fleet_" + dbName + "_db";
