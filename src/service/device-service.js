@@ -5,19 +5,14 @@
  *  @author shweta.ghenand
  *  @version 1.0.0
  */
-/**
- * npm modules
- */
-var _ = require('underscore');
+
 /**
  *  import project module
  */
 var util = require("../util/commonUtil");
 var deviceDao = require("../dao/device-dao");
 var responseConstant = require("../constant/responseConstant");
-var db = require('../config/databaseConnection');
 var empty = require('is-empty');
-
 
 
 /**
@@ -33,7 +28,7 @@ module.exports = {
 
             var page = 0;
             var limit = 0;
-            var sort = 'deviceName';
+            var sort = 'createdAt';
             var order = 'desc';
             var reqObj = {};
 
@@ -152,7 +147,7 @@ module.exports = {
                         }
                     });
                 } else {
-                    return reject(util.responseUtil(null, null, responseConstant.ERROR_IN_DELETION));
+                    return reject(util.responseUtil(null, null, responseConstant.DEVICE_DELETION_ERROR));
                 }
             }, function (err) {
                 return reject(err);

@@ -375,19 +375,19 @@ router.get('/:tenantId/vehicles', function (req, res) {
     req.checkParams('tenantId', 'Invalid tenantId').isUUID();
 
     if (!empty(req.query.limit)) {
-        req.checkQuery('limit', 'Invalid').optional().isInt();
+        req.checkQuery('limit', 'Invalid limit parameter').optional().isInt();
     }
     if (!empty(req.query.page)) {
-        req.checkQuery('page', 'Invalid').optional().isInt();
+        req.checkQuery('page', 'Invalid page parameter').optional().isInt();
     }
     if (!empty(req.query.sort)) {
-        req.checkQuery('sort', 'Invalid').optional().isIn(constants.vehicleSortFields);
+        req.checkQuery('sort', 'Invalid sort parameter').optional().isIn(constants.vehicleSortFields);
     }
     if (!empty(req.query.order)) {
-        req.checkQuery('order', 'Invalid').optional().isIn(constants.order);
+        req.checkQuery('order', 'Invalid order parameter').optional().isIn(constants.order);
     }
     if (!empty(req.query.isDriverUnassigned)) {
-        req.checkQuery('isDriverUnassigned', 'Invalid').optional().isIn(['true', 'false']);
+        req.checkQuery('isDriverUnassigned', 'Invalid isDriverUnassigned flag').optional().isIn(['true', 'false']);
     }
     if (!empty(req.query.userId)) {
         req.checkQuery('userId', 'Invalid userId').optional().isUUID();
@@ -396,7 +396,7 @@ router.get('/:tenantId/vehicles', function (req, res) {
         req.checkQuery('fleetId', 'Invalid fleetId').optional().isUUID();
     }
     if (!empty(req.query.isFleetUnassigned)) {
-        req.checkQuery('isFleetUnassigned', 'Invalid').optional().isIn(['true', 'false']);
+        req.checkQuery('isFleetUnassigned', 'Invalid isFleetUnassigned flag').optional().isIn(['true', 'false']);
     }
     var errors = req.validationErrors(true);
     if (errors) {

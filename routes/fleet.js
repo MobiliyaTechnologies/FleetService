@@ -101,9 +101,9 @@ router.post('/:tenantId/fleets', function (req, res) {
 
     req.checkParams('tenantId', 'TenantId can not be null').notEmpty();
     req.checkParams('tenantId', 'Invalid TenantId ').isUUID();
-    req.checkBody('fleetName', 'fleetName can not be null.').notEmpty();
+    req.checkBody('fleetName', 'FleetName can not be null.').notEmpty();
     req.checkBody('fleetName', 'Invalid fleetName.').isLength(3, 20);
-    req.checkBody('fleetAdminId', 'fleetAdminId can not be null').notEmpty();
+    req.checkBody('fleetAdminId', 'FleetAdminId can not be null').notEmpty();
     req.checkBody('fleetAdminId', 'Invalid fleetAdminId ').isUUID();
     var errors = req.validationErrors(true);
     if (errors) {
@@ -192,7 +192,7 @@ router.post('/:tenantId/fleets', function (req, res) {
  *
  */
 router.get('/:tenantId/fleets/:id', function (req, res) {
-    req.checkParams('tenantId', 'tenantId can not be empty').notEmpty();
+    req.checkParams('tenantId', 'TenantId can not be empty').notEmpty();
     req.checkParams('tenantId', 'Invalid tenantId').isUUID();
 
     req.checkParams('id', 'Id can not be empty').notEmpty();
@@ -294,16 +294,16 @@ router.get('/:tenantId/fleets', function (req, res) {
     req.checkParams('tenantId', 'Invalid TenantId ').isUUID();
 
     if (!empty(req.query.limit)) {
-        req.checkQuery('limit', 'Invalid').optional().isInt();
+        req.checkQuery('limit', 'Invalid limit parameter').optional().isInt();
     }
     if (!empty(req.query.page)) {
-        req.checkQuery('page', 'Invalid').optional().isInt();
+        req.checkQuery('page', 'Invalid page parameter').optional().isInt();
     }
     if (!empty(req.query.sort)) {
-        req.checkQuery('sort', 'Invalid').optional().isIn(constants.vehicleSortFields);
+        req.checkQuery('sort', 'Invalid sort parameter').optional().isIn(constants.vehicleSortFields);
     }
     if (!empty(req.query.order)) {
-        req.checkQuery('order', 'Invalid').optional().isIn(constants.order);
+        req.checkQuery('order', 'Invalid order parameter').optional().isIn(constants.order);
     }
 
     var errors = req.validationErrors(true);

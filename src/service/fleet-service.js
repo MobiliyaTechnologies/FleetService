@@ -5,10 +5,7 @@
  *  @author shweta.ghenand
  *  @version 1.0.0
  */
-/**
- * npm modules
- */
-var _ = require('underscore');
+
 /**
  *  import project module
  */
@@ -18,7 +15,6 @@ var vehicleDao = require("../dao/vehicle-dao");
 var vehicleService = require("../service/vehicle-service");
 var async = require('async');
 var responseConstant = require("../constant/responseConstant");
-var db = require('../config/databaseConnection');
 var empty = require('is-empty');
 var config = require('../config/config.json');
 config = config[config.activeEnv];
@@ -119,7 +115,7 @@ module.exports = {
 
             var page = 0;
             var limit = 0;
-            var sort = 'fleetName';
+            var sort = 'createdAt';
             var order = 'desc';
             var reqObj = {};
 
@@ -259,7 +255,7 @@ module.exports = {
             updateObj.isDeleted = 1;
             var page = 0;
             var limit = 0;
-            var sort = 'brandName';
+            var sort = 'createdAt';
             var order = 'desc';
             var reqObj = {};
             var asyncObject = {};

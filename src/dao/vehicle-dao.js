@@ -63,7 +63,7 @@ module.exports = {
                         return resolve(result);
                     } else {
                         return reject(
-                            util.responseUtil(null, null, responseConstant.RECORD_NOT_FOUND)
+                            util.responseUtil(null, null, responseConstant.VEHICLE_NOT_FOUND)
                         );
                     }
                 },
@@ -116,7 +116,7 @@ module.exports = {
                         });
                     else
                         return reject(
-                            util.responseUtil(null, result, responseConstant.RECORD_NOT_FOUND)
+                            util.responseUtil(null, result, responseConstant.VEHICLE_NOT_FOUND)
                         );
                 },
                 function (err) {
@@ -147,7 +147,7 @@ module.exports = {
                     }
                     else {
                         return reject(
-                            util.responseUtil(null, result, responseConstant.RECORD_NOT_FOUND)
+                            util.responseUtil(null, result, responseConstant.VEHICLE_NOT_FOUND)
                         );
                     }
                 },
@@ -182,7 +182,7 @@ module.exports = {
                 }
             }, function (err) {
                 logger.error(err);
-                return reject(util.responseUtil(err, null, responseConstant.SYSTEM_ERROR));
+                return reject(util.responseUtil(err, null, responseConstant.VEHICLE_NOT_FOUND));
             })
             logger.debug("check user assign to vehicle dao finished");
         });

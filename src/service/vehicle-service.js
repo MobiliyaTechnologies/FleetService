@@ -6,10 +6,6 @@
  *  @version 1.0.0
  */
 /**
- * npm modules
- */
-var _ = require('underscore');
-/**
  *  import project module
  */
 var util = require("../util/commonUtil");
@@ -18,7 +14,6 @@ var deviceDao = require('../dao/device-dao');
 var fleetDao = require('../dao/fleet-dao');
 var responseConstant = require("../constant/responseConstant");
 var async = require('async');
-var db = require('../config/databaseConnection');
 var empty = require('is-empty');
 var config = require('../config/config.json');
 config = config[config.activeEnv];
@@ -91,7 +86,7 @@ module.exports = {
 
             var page = 0;
             var limit = 0;
-            var sort = 'brandName';
+            var sort = 'createdAt';
             var order = 'desc';
             var isAssigned = false;
             var reqObj = {};

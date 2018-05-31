@@ -9,8 +9,6 @@
 /**
  * import project modules
  */
-var constant = require("../constant/constants");
-const secret = 'm@b1l1y@';
 var iothub = require('azure-iothub');
 var https = require('http');
 var config = require('../config/config.json');
@@ -124,7 +122,6 @@ module.exports = {
         //end the request
         getReq.end();
         getReq.on('error', function (err) {
-            //console.log("Error: ", err);
             return callback(err);
         });
     },

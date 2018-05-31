@@ -112,7 +112,7 @@ module.exports = {
                         return resolve(reqObj);
                     else
                         return reject(
-                            util.responseUtil(null, result, responseConstant.RECORD_NOT_FOUND)
+                            util.responseUtil(null, result, responseConstant.DEVICE_NOT_FOUND)
                         );
                 },
                 function (err) {
@@ -143,7 +143,7 @@ module.exports = {
                     }
                     else {
                         return reject(
-                            util.responseUtil(null, result, responseConstant.RECORD_NOT_FOUND)
+                            util.responseUtil(null, result, responseConstant.DEVICE_NOT_FOUND)
                         );
                     }
                 },

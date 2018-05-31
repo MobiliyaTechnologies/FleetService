@@ -114,12 +114,12 @@ router.post('/:tenantId/devices', function (req, res) {
 
     req.checkParams('tenantId', 'TenantId can not be null').notEmpty();
     req.checkParams('tenantId', 'Invalid TenantId ').isUUID();
-    req.checkBody('deviceName', 'deviceName can not be null.').notEmpty();
+    req.checkBody('deviceName', 'DeviceName can not be null.').notEmpty();
     req.checkBody('deviceName', 'Invalid deviceName.').isLength(3, 20);
-    req.checkBody('serialNo', 'serialNo can not be null.').notEmpty();
+    req.checkBody('serialNo', 'SerialNo can not be null.').notEmpty();
     req.checkBody('serialNo', 'Invalid serialNo.').isLength(3, 20);
-    req.checkBody('protocolVersion', 'protocolVersion can not be null').notEmpty();
-    req.checkBody('deviceType', 'deviceType can not be null').notEmpty();
+    req.checkBody('protocolVersion', 'ProtocolVersion can not be null').notEmpty();
+    req.checkBody('deviceType', 'DeviceType can not be null').notEmpty();
     var errors = req.validationErrors(true);
     if (errors) {
         res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALIDE_REQUEST_PARAMETERS));
@@ -211,8 +211,8 @@ router.post('/:tenantId/devices', function (req, res) {
  *
  */
 router.get('/:tenantId/devices/:id', function (req, res) {
-    req.checkParams('id', 'Id can not be empty').notEmpty();
-    req.checkParams('id', 'Invalid id').isUUID();
+    req.checkParams('id', 'DeviceId can not be empty').notEmpty();
+    req.checkParams('id', 'Invalid DeviceId').isUUID();
     req.checkParams('tenantId', 'TenantId can not be null').notEmpty();
     req.checkParams('tenantId', 'Invalid TenantId ').isUUID();
     var errors = req.validationErrors(true);
@@ -330,16 +330,16 @@ router.get('/:tenantId/devices', function (req, res) {
     req.checkParams('tenantId', 'Invalid TenantId ').isUUID();
 
     if (!empty(req.query.limit)) {
-        req.checkQuery('limit', 'Invalid').optional().isInt();
+        req.checkQuery('limit', 'Invalid limit parameter').optional().isInt();
     }
     if (!empty(req.query.page)) {
-        req.checkQuery('page', 'Invalid').optional().isInt();
+        req.checkQuery('page', 'Invalid page parameter').optional().isInt();
     }
     if (!empty(req.query.sort)) {
-        req.checkQuery('sort', 'Invalid').optional().isIn(constants.deviceSortFields);
+        req.checkQuery('sort', 'Invalid sort parameter').optional().isIn(constants.deviceSortFields);
     }
     if (!empty(req.query.order)) {
-        req.checkQuery('order', 'Invalid').optional().isIn(constants.order);
+        req.checkQuery('order', 'Invalid order parameter').optional().isIn(constants.order);
     }
     if (!empty(req.query.isDeviceAssign)) {
         req.checkQuery('isDeviceAssign', 'Invalid isDeviceAssign').optional().isIn([0, 1]);
@@ -430,8 +430,8 @@ router.put('/:tenantId/devices/:id', function (req, res) {
     req.sanitize('lastConnectedTime').trim();
     req.sanitize('protocolVersion').trim();
 
-    req.checkParams('id', 'Id can not be empty').notEmpty();
-    req.checkParams('id', 'Invalid id').isUUID();
+    req.checkParams('id', 'DeviceId can not be empty').notEmpty();
+    req.checkParams('id', 'Invalid deviceId').isUUID();
 
     req.checkParams('tenantId', 'TenantId can not be null').notEmpty();
     req.checkParams('tenantId', 'Invalid TenantId ').isUUID();
@@ -500,8 +500,8 @@ router.put('/:tenantId/devices/:id', function (req, res) {
  *
  */
 router.delete('/:tenantId/devices/:id', function (req, res) {
-    req.checkParams('id', 'Id can not be empty').notEmpty();
-    req.checkParams('id', 'Invalid id').isUUID();
+    req.checkParams('id', 'DeviceId can not be empty').notEmpty();
+    req.checkParams('id', 'Invalid deviceId').isUUID();
 
     req.checkParams('tenantId', 'TenantId can not be empty').notEmpty();
     req.checkParams('tenantId', 'Invalid tenantId').isUUID();

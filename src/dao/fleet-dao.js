@@ -10,7 +10,6 @@
 /**
  * import project modules
  */
-//var fleet = require('../models/fleet').fleets;
 var util = require("../util/commonUtil");
 var responseConstant = require("../constant/responseConstant");
 var logger = require("../util/logger");
@@ -112,7 +111,7 @@ module.exports = {
                         return resolve(reqObj);
                     else
                         return reject(
-                            util.responseUtil(null, result, responseConstant.RECORD_NOT_FOUND)
+                            util.responseUtil(null, result, responseConstant.FLEET_NOT_FOUND)
                         );
                 },
                 function (err) {
@@ -143,7 +142,7 @@ module.exports = {
                     }
                     else {
                         return reject(
-                            util.responseUtil(null, result, responseConstant.RECORD_NOT_FOUND)
+                            util.responseUtil(null, result, responseConstant.FLEET_NOT_FOUND)
                         );
                     }
                 },
