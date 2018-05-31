@@ -107,7 +107,7 @@ router.post('/:tenantId/fleets', function (req, res) {
     req.checkBody('fleetAdminId', 'Invalid fleetAdminId ').isUUID();
     var errors = req.validationErrors(true);
     if (errors) {
-        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALIDE_REQUEST_PARAMETERS));
+        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALID_REQUEST_PARAMETERS));
     } else {
         auth.isTenantIDValid(req, req.params.tenantId).then(function (result) {
             service.insertData(req).then(function (result) {
@@ -199,7 +199,7 @@ router.get('/:tenantId/fleets/:id', function (req, res) {
     req.checkParams('id', 'Invalid id').isUUID();
     var errors = req.validationErrors(true);
     if (errors) {
-        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALIDE_REQUEST_PARAMETERS));
+        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALID_REQUEST_PARAMETERS));
     } else {
         auth.isTenantIDValid(req, req.params.tenantId).then(function (result) {
             service.getFleetDetails(req).then(function (result) {
@@ -308,7 +308,7 @@ router.get('/:tenantId/fleets', function (req, res) {
 
     var errors = req.validationErrors(true);
     if (errors) {
-        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALIDE_REQUEST_PARAMETERS));
+        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALID_REQUEST_PARAMETERS));
     } else {
         auth.isTenantIDValid(req, req.params.tenantId).then(function (result) {
             service.getAllFleetData(req).then(function (result) {
@@ -412,7 +412,7 @@ router.put('/:tenantId/fleets/:id', function (req, res) {
     }
     var errors = req.validationErrors(true);
     if (errors) {
-        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALIDE_REQUEST_PARAMETERS));
+        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALID_REQUEST_PARAMETERS));
     } else {
         auth.isTenantIDValid(req, req.params.tenantId).then(function (result) {
             service.updateData(req).then(function (result) {
@@ -482,7 +482,7 @@ router.delete('/:tenantId/fleets/:id', function (req, res) {
 
     var errors = req.validationErrors(true);
     if (errors) {
-        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALIDE_REQUEST_PARAMETERS));
+        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALID_REQUEST_PARAMETERS));
     } else {
         auth.isTenantIDValid(req, req.params.tenantId).then(function (result) {
             service.deleteData(req).then(function (result) {

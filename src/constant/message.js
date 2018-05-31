@@ -24,11 +24,11 @@ err_obj[constants.UNDEFINED_DATABASE_ERROR] = "Invalid request information.";//"
 
 err_obj[constants.RUN_TIME_ERROR] = "Internal Server Error";
 err_obj[constants.DUPLICATION_ERROR] = "Record already exist.";
-err_obj[constants.DEVICE_NOT_FOUND] = "Record not found";
-err_obj[constants.FLEET_NOT_FOUND] = "Record not found";
-err_obj[constants.VEHILCE_NOT_FOUND] = "Record not found";
+err_obj[constants.DEVICE_NOT_FOUND] = "Device not found";
+err_obj[constants.FLEET_NOT_FOUND] = "Fleet not found";
+err_obj[constants.VEHILCE_NOT_FOUND] = "Vehicle not found";
 err_obj[constants.UNAUTHORIZE] = "We are sorry but we are not able to authenticate you. Login again";
-err_obj[constants.INVALIDE_REQUEST_PARAMETERS] = "Invalid request ";
+err_obj[constants.INVALID_REQUEST_PARAMETERS] = "Invalid request ";
 err_obj[constants.INVALID_TENANTID] = "Invalid tenantId";
 err_obj[constants.DB_CREATION_FAILED] = "DB creation failed.";
 err_obj[constants.DB_CONNECTION_FAILED] = "DB connection failed.";

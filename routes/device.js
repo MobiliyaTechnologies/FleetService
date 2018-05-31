@@ -122,7 +122,7 @@ router.post('/:tenantId/devices', function (req, res) {
     req.checkBody('deviceType', 'DeviceType can not be null').notEmpty();
     var errors = req.validationErrors(true);
     if (errors) {
-        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALIDE_REQUEST_PARAMETERS));
+        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALID_REQUEST_PARAMETERS));
     } else {
         auth.isTenantIDValid(req, req.params.tenantId).then(function (result) {
             service.insertData(req).then(function (result) {
@@ -217,7 +217,7 @@ router.get('/:tenantId/devices/:id', function (req, res) {
     req.checkParams('tenantId', 'Invalid TenantId ').isUUID();
     var errors = req.validationErrors(true);
     if (errors) {
-        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALIDE_REQUEST_PARAMETERS));
+        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALID_REQUEST_PARAMETERS));
     } else {
         auth.isTenantIDValid(req, req.params.tenantId).then(function (result) {
             service.getDeviceDetails(req).then(function (result) {
@@ -346,7 +346,7 @@ router.get('/:tenantId/devices', function (req, res) {
     }
     var errors = req.validationErrors(true);
     if (errors) {
-        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALIDE_REQUEST_PARAMETERS));
+        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALID_REQUEST_PARAMETERS));
     } else {
         auth.isTenantIDValid(req, req.params.tenantId).then(function (result) {
             service.getAllDeviceData(req).then(function (result) {
@@ -438,7 +438,7 @@ router.put('/:tenantId/devices/:id', function (req, res) {
 
     var errors = req.validationErrors(true);
     if (errors) {
-        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALIDE_REQUEST_PARAMETERS));
+        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALID_REQUEST_PARAMETERS));
     } else {
         auth.isTenantIDValid(req, req.params.tenantId).then(function (result) {
             service.updateData(req).then(function (result) {
@@ -507,7 +507,7 @@ router.delete('/:tenantId/devices/:id', function (req, res) {
     req.checkParams('tenantId', 'Invalid tenantId').isUUID();
     var errors = req.validationErrors(true);
     if (errors) {
-        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALIDE_REQUEST_PARAMETERS));
+        res.status(HttpStatus.BAD_REQUEST).send(util.responseUtil(errors, null, responseConstant.INVALID_REQUEST_PARAMETERS));
     } else {
         auth.isTenantIDValid(req, req.params.tenantId).then(function (result) {
             service.deleteData(req).then(function (result) {
