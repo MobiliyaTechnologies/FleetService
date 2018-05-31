@@ -136,7 +136,7 @@ module.exports = {
                 if (result.dataValues.isDeviceAssign === 0) {
                     util.removeDeviceFromIOTHub(result.deviceName, function (err, res) {
                         if (err) {
-                            return reject(util.responseUtil(null, null, responseConstant.INVALIDE_DEVICE));
+                            return reject(util.responseUtil(null, null, responseConstant.DEVICE_DELETION_ERROR));
                         } else {
 
                             deviceDao.deleteData(updateObj, { id: req.params.id, isDeleted: 0 }).then(function (result) {

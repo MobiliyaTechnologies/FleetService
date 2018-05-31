@@ -52,8 +52,6 @@ constants.DRIVER_NOT_BELONGTO_TENANT = 1140;
 constants.ERROR_IN_DELETION = 1141;
 constants.DEVICE_DELETION_ERROR = 1142;
 
-constants.DEVICE_NOT_FOUND = 2006;
-constants.FLEET_NOT_FOUND = 2007;
 constants.VEHICLE_NOT_FOUND = 2008;
 
 constants.SEQUELIZE_DATABASE_ERROR_NAME = 'SequelizeDatabaseError';
