@@ -88,14 +88,29 @@ module.exports = {
     insertData: function (reqObj) {
         return new Promise(function (resolve, reject) {
             logger.debug("create device dao started");
-            return db.devices.create(reqObj).then(function (result) {
-                return resolve(
-                    result.dataValues
-                )
+            return db.devices.findAll({
+                where: {
+                    deviceName: reqObj.deviceName,
+                    isDeleted: 0
+                }
+            }).then(function (existingDevice) {
+                if (existingDevice.length == 0) {
+                    return db.devices.create(reqObj).then(function (result) {
+                        return resolve(
+                            result.dataValues
+                        )
+                    }, function (err) {
+                        logger.error(err);
+                        return reject(util.responseUtil(err, null, responseConstant.SEQUELIZE_DATABASE_ERROR));
+                    });
+                }
+                else {
+                    return reject(util.responseUtil(null, null, responseConstant.DEVICE_DUPLICATION_ERROR));
+                }
             }, function (err) {
                 logger.error(err);
-                return reject(util.responseUtil(err, null, responseConstant.SEQUELIZE_DATABASE_ERROR));
-            });
+                return reject(util.responseUtil(err, null, responseConstant.SYSTEM_ERROR));
+            })
             logger.debug("create device dao finished");
         });
     },
@@ -161,9 +176,9 @@ module.exports = {
         });
     },
 
-  /**
-   * DAO for get list of devices by id
-   */
+    /**
+     * DAO for get list of devices by id
+     */
     getDeviceList: function (reqObj) {
         return new Promise(function (resolve, reject) {
             logger.debug("get  device list dao started");

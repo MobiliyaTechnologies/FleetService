@@ -41,6 +41,7 @@ err_obj[constants.DRIVER_NOT_FOUND] = "Driver is not found ";
 err_obj[constants.FLEET_ADMIN_NOT_BELONGTO_TENANT] = "Fleet Admin does not belong to tenant";
 err_obj[constants.DRIVER_NOT_BELONGTO_TENANT] = "Driver does not belong to tenant";
 err_obj[constants.ERROR_IN_DELETION] = "Unable to delete fleet";
+err_obj[constants.DEVICE_DUPLICATION_ERROR] = "Device already exist ";
 
 /**
  * function for get message from error code
