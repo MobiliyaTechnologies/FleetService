@@ -109,7 +109,7 @@ module.exports = {
                 }
             }, function (err) {
                 logger.error(err);
-                return reject(util.responseUtil(err, null, responseConstant.SYSTEM_ERROR));
+                return reject(util.responseUtil(err, null, responseConstant.SEQUELIZE_DATABASE_ERROR));
             })
             logger.debug("create device dao finished");
         });
