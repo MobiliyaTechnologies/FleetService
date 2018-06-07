@@ -120,12 +120,37 @@ app.get('/', function (req, res, next) {
 
 
 app.post('/powerbi/auth', function (req, res) {
+    var username;
+    var password;
+    var client_id;
+    var client_secret;
+    if (process.env.CUSTOMCONNSTR_powerBIUserName != undefined) {
+        username = process.env.CUSTOMCONNSTR_powerBIUserName;
+    } else {
+        username = 'Microsoft-Fleet-Mgmt@mobiliya.com';
+    }
+    if (process.env.CUSTOMCONNSTR_powerBIPassword != undefined) {
+        password = process.env.CUSTOMCONNSTR_powerBIPassword;
+    } else {
+        password = 'Mobiliya!@#$';
+    }
+    if (process.env.CUSTOMCONNSTR_powerBIClientId != undefined) {
+        client_id = process.env.CUSTOMCONNSTR_powerBIClientId;
+    } else {
+        client_id = 'fd42d25d-04e6-4541-bc35-75d9928828ac';
+    }
+    if (process.env.CUSTOMCONNSTR_powerBIClientSecret != undefined) {
+        client_secret = process.env.CUSTOMCONNSTR_powerBIClientSecret;
+    } else {
+        client_secret = 'I6iIR1hlb7eCzI1z9yc856SBLgQM1t0ycKxnwZYFgsE=';
+    }
+
     var authReq = {
         "grant_type": "password",
-        "username": "Mobiliya-Fleet-Mgmt@mobiliya.com",
-        "password": "Mobiliya!@#$",
-        "client_id": "fd42d25d-04e6-4541-bc35-75d9928828ac",
-        "client_secret": "I6iIR1hlb7eCzI1z9yc856SBLgQM1t0ycKxnwZYFgsE=",
+        "username": username,
+        "password": password,
+        "client_id": client_id,
+        "client_secret": client_secret,
         "resource": "https://analysis.windows.net/powerbi/api"
     }
     request.post({

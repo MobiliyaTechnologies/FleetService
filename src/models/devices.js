@@ -58,6 +58,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             defaultValue: 'Active'
         },
+        connectionString: {
+            type: DataTypes.TEXT,
+            defaultValue: null
+        },
     }, {
             tableName: 'devices',
             freezeTableName: true

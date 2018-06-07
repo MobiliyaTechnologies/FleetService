@@ -436,6 +436,7 @@ router.get('/:tenantId/vehicles', function (req, res) {
  * @apiParam {String} [userId=null]  User Id(optional).
  * @apiParam {String} [deviceId=null]  Device Id(optional).
  * @apiParam {String} [fleetId=null]  Fleet Id(optional).
+ * @apiParam {Boolean} isRemoveDriver Delete Driver associated with vehicle (optional).
  *
  * @apiParamExample {json} Request-Example:
  *     	{

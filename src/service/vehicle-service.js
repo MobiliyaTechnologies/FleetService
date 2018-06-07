@@ -17,6 +17,7 @@ var async = require('async');
 var empty = require('is-empty');
 var config = require('../config/config.json');
 config = config[config.activeEnv];
+var logger = require('../util/logger');
 
 
 //Rest calls:
@@ -334,56 +335,73 @@ module.exports = {
         return new Promise(function (resolve, reject) {
             var updateObj = isEmptyCheck(req.body);
             updateObj.updatedAt = new Date();
-            if (updateObj.userId) {
-                vehicleDao.isUserAssignToVehicle({ userId: updateObj.userId, isDeleted: 0 }).then(function (result) {
-                    vehicleDao.updateData(updateObj, { id: req.params.id, isDeleted: 0 }).then(function (result) {
-                        if (updateObj.deviceId) {
-                            deviceDao.updateData({ isDeviceAssign: 1 }, { id: updateObj.deviceId, isDeleted: 0 }).then(function (deviceResult) {
-                                return resolve(util.responseUtil(null, result, responseConstant.SUCCESS));
-                            }, function (err) {
-                                return reject(err);
-                            });
-                        } else {
-                            return resolve(util.responseUtil(null, result, responseConstant.SUCCESS));
-                        }
-                        if (updateObj.userId) {
-                            var obj = {};
-                            obj.isDriverAssign = 1;
-                            updateDriverStatus(req, result.userId, obj, function (err, driverUpdateResult) {
-                                if (err) {
-                                    return reject(util.responseUtil(null, null, responseConstant.RUN_TIME_ERROR));
-                                } else {
-                                    return resolve(util.responseUtil(null, result, responseConstant.SUCCESS));
-                                }
-
-                            });
-                        }
-                        else {
-                            return resolve(util.responseUtil(null, result, responseConstant.SUCCESS));
-                        }
-                    }, function (err) {
-                        return reject(err);
-                    });
-
-                }, function (err) {
-                    return reject(err);
-                })
-            }
-            else {
-                vehicleDao.updateData(updateObj, { id: req.params.id, isDeleted: 0 }).then(function (result) {
-                    if (updateObj.deviceId) {
-                        deviceDao.updateData({ isDeviceAssign: 1 }, { id: updateObj.deviceId, isDeleted: 0 }).then(function (deviceResult) {
+            vehicleDao.getVehicleDetails({ id: req.params.id, isDeleted: 0 }).then(function (vehicleResult) {
+                if (vehicleResult.userId != null && !empty(req.body.userId)) {
+                    return reject(util.responseUtil(null, null, responseConstant.USER_EXIST));
+                }
+                if (updateObj.userId) {
+                    vehicleDao.isUserAssignToVehicle({ userId: updateObj.userId, isDeleted: 0 }).then(function (result) {
+                        vehicleDao.updateData(updateObj, { id: req.params.id, isDeleted: 0 }).then(function (result) {
+                            if (updateObj.deviceId) {
+                                deviceDao.updateData({ isDeviceAssign: 1 }, { id: updateObj.deviceId, isDeleted: 0 }).then(function (deviceResult) {
+                                    logger.info("Update device status");
+                                }, function (err) {
+                                    return reject(err);
+                                });
+                            }
+                            if (updateObj.userId) {
+                                var obj = {};
+                                obj.isDriverAssign = 1;
+                                obj.fleetId = result.fleetId;
+                                updateDriverStatus(req, result.userId, obj, function (err, driverUpdateResult) {
+                                    if (err) {
+                                        return reject(util.responseUtil(null, null, responseConstant.RUN_TIME_ERROR));
+                                    }
+                                    else {
+                                        logger.info("Updated driver status");
+                                    }
+                                });
+                            }
                             return resolve(util.responseUtil(null, result, responseConstant.SUCCESS));
                         }, function (err) {
                             return reject(err);
                         });
-                    } else {
+
+                    }, function (err) {
+                        return reject(err);
+                    })
+                }
+                else {
+                    vehicleDao.updateData(updateObj, { id: req.params.id, isDeleted: 0 }).then(function (result) {
+                        if (updateObj.deviceId) {
+                            deviceDao.updateData({ isDeviceAssign: 1 }, { id: updateObj.deviceId, isDeleted: 0 }).then(function (deviceResult) {
+                                logger.info("Update device status");
+                            }, function (err) {
+                                return reject(err);
+                            });
+                        }
+
+                        if (req.body.isRemoveDriver === true) {
+                            var obj = {};
+                            obj.isDriverAssign = 0;
+                            updateDriverStatus(req, vehicleResult.userId, obj, function (err, driverUpdateResult) {
+                                if (err) {
+                                    return reject(util.responseUtil(null, null, responseConstant.RUN_TIME_ERROR));
+                                }
+                                else {
+                                    logger.info("Updated driver status");
+                                }
+                            });
+                        }
                         return resolve(util.responseUtil(null, result, responseConstant.SUCCESS));
-                    }
-                }, function (err) {
-                    return reject(err);
-                });
-            }
+
+                    }, function (err) {
+                        return reject(err);
+                    });
+                }
+            }, function (err) {
+                return reject(err);
+            });
         });
     },
 
@@ -403,19 +421,19 @@ module.exports = {
                 vehicleDao.deleteData(updateObj, { id: req.params.id, isDeleted: 0 }).then(function (result) {
                     if (getVehicleResult.dataValues.deviceId) {
                         deviceDao.updateData({ isDeviceAssign: 0 }, { id: getVehicleResult.dataValues.deviceId, isDeleted: 0 }).then(function (deviceResult) {
-                            return resolve(util.responseUtil(null, null, responseConstant.SUCCESS));
+                            logger.info("Update device status");
                         }, function (err) {
                             return reject(err);
                         });
                     }
                     if (getVehicleResult.dataValues.userId) {
                         var obj = {};
-                        obj.isDriverAssign = '0';
+                        obj.isDriverAssign = 0;
                         updateDriverStatus(req, getVehicleResult.dataValues.userId, obj, function (err, driverUpdateResult) {
                             if (err) {
                                 return reject(util.responseUtil(null, null, responseConstant.RUN_TIME_ERROR));
                             } else {
-                                return resolve(util.responseUtil(null, null, responseConstant.SUCCESS));
+                                logger.info("Updated driver status");
                             }
 
                         });
@@ -494,6 +512,9 @@ function isEmptyCheck(body) {
     }
     if (!empty(body.color)) {
         insertObj.color = body.color;
+    }
+    if (body.isRemoveDriver && body.isRemoveDriver === true) {
+        insertObj.userId = null;
     }
     return insertObj;
 }

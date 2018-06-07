@@ -308,7 +308,7 @@ module.exports = {
                         if (callabackResults.driverResult === true && callabackResults.vehicleResult === true) {
                             fleetDao.deleteData(updateObj, { id: req.params.id, isDeleted: 0 }).then(function (result) {
                                 var obj = {};
-                                obj.isRemoveFleet = 'true';
+                                obj.isRemoveFleet = true;
                                 updateFleet(req, getFleetResult.fleetAdminId, obj, function (err, driverUpdateResult) {
                                     if (err) {
                                         return reject(util.responseUtil(null, null, responseConstant.RUN_TIME_ERROR));
@@ -322,7 +322,7 @@ module.exports = {
                                 return reject(err);
                             });
                         } else {
-                            return reject(util.responseUtil(null, null, responseConstant.ERROR_IN_DELETION));
+                            return reject(util.responseUtil(null, null, responseConstant.FLEET_DELETION_ERROR));
                         }
 
                     }

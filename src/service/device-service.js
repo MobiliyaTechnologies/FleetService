@@ -13,6 +13,8 @@ var util = require("../util/commonUtil");
 var deviceDao = require("../dao/device-dao");
 var responseConstant = require("../constant/responseConstant");
 var empty = require('is-empty');
+var config = require('../config/config.json');
+config = config[config.activeEnv];
 
 
 /**
@@ -85,12 +87,19 @@ module.exports = {
      */
     insertData: function (req) {
         return new Promise(function (resolve, reject) {
+            var iothubConnectionString = config.iothub.CONNECTION_STRING;
+            var strResult = iothubConnectionString.split(';');
+            var iothubName = strResult[0];
             util.createDeviceOnIOTHub(req.body.deviceName, function (err, deviceInfo) {
                 if (err) {
-                    return reject(util.responseUtil(null, null, responseConstant.DEVICE_CREATION_ERROR));
+                    return reject(util.responseUtil(err, null, responseConstant.DEVICE_CREATION_ERROR));
                 } else {
                     try {
                         var insertObj = isEmptyCheck(req.body);
+                        var deviceId = deviceInfo.deviceId;
+                        var SharedAccessKey = deviceInfo.authentication.symmetricKey.primaryKey;
+                        var connectionString = iothubName.concat(';', 'DeviceId=', deviceId, ';', 'SharedAccessKey=', SharedAccessKey);
+                        insertObj.connectionString = connectionString;
                         deviceDao.insertData(insertObj).then(function (result) {
                             return resolve(util.responseUtil(null, result, responseConstant.SUCCESS));
                         }, function (err) {
@@ -99,7 +108,7 @@ module.exports = {
                         })
                     }
                     catch (err) {
-                        return reject(util.responseUtil(null, null, responseConstant.DEVICE_CREATION_ERROR));
+                        return reject(util.responseUtil(err, null, responseConstant.DEVICE_CREATION_ERROR));
                     }
                 }
             });

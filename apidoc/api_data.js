@@ -2225,6 +2225,13 @@ define({ "api": [
             "field": "fleetId",
             "defaultValue": "null",
             "description": "<p>Fleet Id(optional).</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Boolean",
+            "optional": false,
+            "field": "isRemoveDriver",
+            "description": "<p>Delete Driver associated with vehicle (optional).</p>"
           }
         ]
       },

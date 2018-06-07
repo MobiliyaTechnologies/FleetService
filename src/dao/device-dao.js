@@ -31,7 +31,7 @@ module.exports = {
                 limit: limit,
                 offset: page,
                 order: [[sort, order]],
-                attributes: ['id', 'deviceName', 'serialNo', 'protocolVersion', 'deviceType', 'description', 'updatedAt', 'createdAt', 'isDeleted', 'status', 'hardwareVersion', 'isDeviceAssign']
+                attributes: ['id', 'deviceName', 'serialNo', 'protocolVersion', 'deviceType', 'description', 'updatedAt', 'createdAt', 'isDeleted', 'status', 'hardwareVersion', 'isDeviceAssign', 'connectionString']
             }).then(
                 function (result) {
                     return resolve(result);
@@ -57,7 +57,7 @@ module.exports = {
             logger.debug("get device dao started");
             db.devices.findOne({
                 where: reqObj,
-                attributes: ['id', 'deviceName', 'serialNo', 'protocolVersion', 'deviceType', 'description', 'updatedAt', 'createdAt', 'isDeleted', 'status', 'hardwareVersion', 'isDeviceAssign']
+                attributes: ['id', 'deviceName', 'serialNo', 'protocolVersion', 'deviceType', 'description', 'updatedAt', 'createdAt', 'isDeleted', 'status', 'hardwareVersion', 'isDeviceAssign', 'connectionString']
             }).then(
                 function (result) {
                     if (result) {
@@ -92,7 +92,8 @@ module.exports = {
                 where: {
                     deviceName: reqObj.deviceName,
                     isDeleted: 0
-                }
+                },
+                attributes: ['id', 'deviceName', 'serialNo', 'protocolVersion', 'deviceType', 'description', 'updatedAt', 'createdAt', 'isDeleted', 'status', 'hardwareVersion', 'isDeviceAssign', 'connectionString']
             }).then(function (existingDevice) {
                 if (existingDevice.length == 0) {
                     return db.devices.create(reqObj).then(function (result) {
