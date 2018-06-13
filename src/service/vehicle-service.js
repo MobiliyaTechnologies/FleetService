@@ -339,6 +339,9 @@ module.exports = {
                 if (vehicleResult.userId != null && !empty(req.body.userId)) {
                     return reject(util.responseUtil(null, null, responseConstant.USER_EXIST));
                 }
+                if (vehicleResult.deviceId != null && !empty(req.body.deviceId)) {
+                    return reject(util.responseUtil(null, null, responseConstant.DEVICE_EXIST));
+                }
                 if (updateObj.userId) {
                     vehicleDao.isUserAssignToVehicle({ userId: updateObj.userId, isDeleted: 0 }).then(function (result) {
                         vehicleDao.updateData(updateObj, { id: req.params.id, isDeleted: 0 }).then(function (result) {
@@ -391,6 +394,14 @@ module.exports = {
                                 else {
                                     logger.info("Updated driver status");
                                 }
+                            });
+                        }
+
+                        if (req.body.isRemoveDevice === true) {
+                            deviceDao.updateData({ isDeviceAssign: 0 }, { id: vehicleResult.deviceId, isDeleted: 0 }).then(function (deviceResult) {
+                                logger.info("Updated device status");
+                            }, function (err) {
+                                return reject(err);
                             });
                         }
                         return resolve(util.responseUtil(null, result, responseConstant.SUCCESS));
@@ -515,6 +526,9 @@ function isEmptyCheck(body) {
     }
     if (body.isRemoveDriver && body.isRemoveDriver === true) {
         insertObj.userId = null;
+    }
+    if (body.isRemoveDevice && body.isRemoveDevice === true) {
+        insertObj.deviceId = null;
     }
     return insertObj;
 }

@@ -36,13 +36,14 @@ err_obj[constants.DB_DUPLICATION_ERROR] = "DB already exist.";
 err_obj[constants.USER_EXIST] = "Vehicle already assigned to driver";
 err_obj[constants.FLEET_ADMIN_NOT_FOUND] = "FleetAdmin not found ";
 err_obj[constants.DEVICE_CREATION_ERROR] = "Unable to create device";
-err_obj[constants.DEVICE_DELETION_ERROR] = "Dongle might be assigned to vehicle. Unable to delete";
+err_obj[constants.DEVICE_DELETION_ERROR] = "Device might be assigned to vehicle. Unable to delete";
 err_obj[constants.DRIVER_NOT_FOUND] = "Driver is not found ";
 err_obj[constants.FLEET_ADMIN_NOT_BELONGTO_TENANT] = "Fleet Admin does not belong to tenant";
 err_obj[constants.DRIVER_NOT_BELONGTO_TENANT] = "Driver does not belong to tenant";
 err_obj[constants.FLEET_DELETION_ERROR] = "Vehicle or Driver might be assigned to Fleet. Unable to delete Fleet";
 err_obj[constants.DEVICE_DUPLICATION_ERROR] = "Device already exist ";
 err_obj[constants.DEVICE_DELETION_IOTHUB_ERROR] = "Unable to delete device ";
+err_obj[constants.DEVICE_EXIST] = "Device already assigned to vehicle";
 
 
 /**

@@ -2231,7 +2231,14 @@ define({ "api": [
             "type": "Boolean",
             "optional": false,
             "field": "isRemoveDriver",
-            "description": "<p>Delete Driver associated with vehicle (optional).</p>"
+            "description": "<p>Delete driver associated with vehicle (optional).</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Boolean",
+            "optional": false,
+            "field": "isRemoveDevice",
+            "description": "<p>Delete device associated with vehicle (optional).</p>"
           }
         ]
       },
