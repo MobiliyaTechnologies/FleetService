@@ -44,7 +44,8 @@ err_obj[constants.FLEET_DELETION_ERROR] = "Vehicle or Driver might be assigned t
 err_obj[constants.DEVICE_DUPLICATION_ERROR] = "Device already exist ";
 err_obj[constants.DEVICE_DELETION_IOTHUB_ERROR] = "Unable to delete device ";
 err_obj[constants.DEVICE_EXIST] = "Device already assigned to vehicle";
-
+err_obj[constants.FLEET_DUPLICATION_ERROR] = "Fleet already exist ";
+err_obj[constants.VEHICLE_DUPLICATION_ERROR] = "Vehicle already exist ";
 
 /**
  * function for get message from error code

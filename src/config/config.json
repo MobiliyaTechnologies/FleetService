@@ -57,7 +57,7 @@
     "hostname_identity": "127.0.0.1",
     "port_identity": "3301",
     "iothub": {
-      "CONNECTION_STRING": "HostName=FleetIotHub-30-5.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=ATjeriy24Ktpu0BNkaf+GJva8Q5BuJBdwP56nPDe1Ps="
+      "CONNECTION_STRING": "HostName=MobiliyaFleetIoTHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=3bnb2jVdTcETxmZH4eiwG6VrhrQCIT44Qe1pCklEd/Y="
     }
   }
 }

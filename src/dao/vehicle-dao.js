@@ -87,15 +87,29 @@ module.exports = {
     */
     insertData: function (reqObj) {
         return new Promise(function (resolve, reject) {
-            logger.debug("create vehicle dao started");
-            return db.vehicles.create(reqObj).then(function (result) {
-                return resolve(
-                    result.dataValues
-                )
+            return db.vehicles.findAll({
+                where: {
+                    registrationNumber: reqObj.registrationNumber,
+                    isDeleted: 0
+                }
+            }).then(function (existingVehicle) {
+                if (existingVehicle.length == 0) {
+                    logger.debug("create vehicle dao started");
+                    return db.vehicles.create(reqObj).then(function (result) {
+                        return resolve(
+                            result.dataValues
+                        )
+                    }, function (err) {
+                        return reject(util.responseUtil(err, null, responseConstant.SEQUELIZE_DATABASE_ERROR));
+                    });
+                }
+                else {
+                    return reject(util.responseUtil(null, null, responseConstant.VEHICLE_DUPLICATION_ERROR));
+                }
             }, function (err) {
-                console.log("error", err);
+                logger.error(err);
                 return reject(util.responseUtil(err, null, responseConstant.SEQUELIZE_DATABASE_ERROR));
-            });
+            })
             logger.debug("create vehicle dao finished");
         });
     },
@@ -164,35 +178,11 @@ module.exports = {
             logger.debug("delete vehicle dao finished");
         });
     },
-
-
-    /**
- * DAO for check whether driver assign to vehicle or not
- */
-    isUserAssignToVehicle: function (reqCondition) {
-        return new Promise(function (resolve, reject) {
-            logger.debug("check user assign to vehicle dao strated");
-            return db.vehicles.findAll({
-                where: reqCondition
-            }).then(function (existingUser) {
-                if (existingUser.length === 0) {
-                    return resolve(existingUser);
-                } else {
-                    return reject(util.responseUtil(null, null, responseConstant.USER_EXIST));
-                }
-            }, function (err) {
-                logger.error(err);
-                return reject(util.responseUtil(err, null, responseConstant.VEHICLE_NOT_FOUND));
-            })
-            logger.debug("check user assign to vehicle dao finished");
-        });
-    },
-
     /**
 * DAO for update fleet of many vehicles
 */
     updateManyFleetRecords: function (reqObj, reqCondition) {
-       
+
         return new Promise(function (resolve, reject) {
             logger.debug("update fleet of  vehicle dao strated");
             db.vehicles.update(reqObj, {

@@ -46,7 +46,32 @@ var isFleetAdminExist = function (req, fleetAdminId, callback) {
         });
     });
 }
+//update status of multiple driver
+var updateDriverStatus = function (req, reqObj, callback) {
+    return new Promise(function (resolve, reject) {
+        var put_data = JSON.stringify(reqObj);
+        var options = {
+            hostname: config.hostname_identity,
+            port: config.port_identity,
+            method: 'PUT',
+            path: '/users/',
+            headers: {
+                'Authorization': req.headers.authorization,
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache',
+                'Content-Length': put_data.length
+            }
+        };
 
+        util.httpRequest(put_data, options, function (err, result1) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(err, result1);
+            }
+        });
+    });
+}
 //update fleet of user
 var updateFleet = function (req, userId, reqObj, callback) {
     return new Promise(function (resolve, reject) {
@@ -172,6 +197,12 @@ module.exports = {
      */
     insertData: function (req) {
         return new Promise(function (resolve, reject) {
+            var page = 0;
+            var limit = 0;
+            var sort = 'createdAt';
+            var order = 'desc';
+            var reqObj = {};
+            var userIdList = [];
             isFleetAdminExist(req, req.body.fleetAdminId, function (err, fleetAdminResult) {
                 if (err) {
                     return reject(util.responseUtil(null, null, responseConstant.RUN_TIME_ERROR));
@@ -193,8 +224,30 @@ module.exports = {
                                 }
                             });
                             if (!empty(req.body.vehicleIdList)) {
+
+                                //Update driver status
+                                reqObj["id"] = { $in: req.body.vehicleIdList };
+                                reqObj.userId = { $ne: null };
+                                vehicleDao.getAllVehicleData(reqObj, page, limit, sort, order).then(function (result) {
+                                    for (var i = 0; i < result.rows.length; i++) {
+                                        userIdList[i] = result.rows[i].dataValues.userId;
+                                    }
+                                    if (userIdList && userIdList.length > 0) {
+                                        var obj = {};
+                                        obj.userIdList = userIdList;
+                                        updateDriverStatus(req, obj, function (err, driverUpdateResult) {
+                                            if (err) {
+                                                return reject(util.responseUtil(null, null, responseConstant.RUN_TIME_ERROR));
+                                            }
+                                        });
+                                    }
+                                }, function (err) {
+                                    return reject(err);
+                                });
+
                                 var updateObj = {};
                                 updateObj.fleetId = result.id;
+                                updateObj.userId = null;
                                 vehicleDao.updateManyFleetRecords(updateObj, req.body.vehicleIdList).then(function (result) {
                                     return resolve(util.responseUtil(null, result, responseConstant.SUCCESS));
                                 }, function (err) {
@@ -219,10 +272,40 @@ module.exports = {
      */
     updateData: function (req) {
         return new Promise(function (resolve, reject) {
+            var page = 0;
+            var limit = 0;
+            var sort = 'createdAt';
+            var order = 'desc';
+            var reqObj = {};
             var updateObj = isEmptyCheck(req.body);
             updateObj.updatedAt = new Date();
+            var userIdList = [];
+
             if (!empty(req.body.vehicleIdList)) {
+
+                //Update driver status
+                reqObj["id"] = { $in: req.body.vehicleIdList };
+                reqObj.userId = { $ne: null };
+                vehicleDao.getAllVehicleData(reqObj, page, limit, sort, order).then(function (result) {
+                    for (var i = 0; i < result.rows.length; i++) {
+                        userIdList[i] = result.rows[i].dataValues.userId;
+                    }
+                    if (userIdList && userIdList.length > 0) {
+                        var obj = {};
+                        obj.userIdList = userIdList;
+                        updateDriverStatus(req, obj, function (err, driverUpdateResult) {
+                            if (err) {
+                                return reject(util.responseUtil(null, null, responseConstant.RUN_TIME_ERROR));
+                            }
+                        });
+                    }
+                }, function (err) {
+                    return reject(err);
+                });
+
+                //Update vehicle status
                 var updateFleet = {};
+                updateFleet.userId = null;
                 if (req.body.isVehicleRemove && req.body.isVehicleRemove === true) {
                     updateFleet.fleetId = null;
                 } else {

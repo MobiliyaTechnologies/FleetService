@@ -87,14 +87,28 @@ module.exports = {
     insertData: function (reqObj) {
         return new Promise(function (resolve, reject) {
             logger.debug("create fleet dao started");
-            return db.fleets.create(reqObj).then(function (result) {
-                return resolve(
-                    result.dataValues
-                )
+            return db.fleets.findAll({
+                where: {
+                    fleetName: reqObj.fleetName,
+                    isDeleted: 0
+                }
+            }).then(function (existingDevice) {
+                if (existingDevice.length == 0) {
+                    return db.fleets.create(reqObj).then(function (result) {
+                        return resolve(
+                            result.dataValues
+                        )
+                    }, function (err) {
+                        return reject(util.responseUtil(err, null, responseConstant.SEQUELIZE_DATABASE_ERROR));
+                    });
+                }
+                else {
+                    return reject(util.responseUtil(null, null, responseConstant.FLEET_DUPLICATION_ERROR));
+                }
             }, function (err) {
-                console.log("error", err);
+                logger.error(err);
                 return reject(util.responseUtil(err, null, responseConstant.SEQUELIZE_DATABASE_ERROR));
-            });
+            })
             logger.debug("create fleet dao finished");
         });
     },
